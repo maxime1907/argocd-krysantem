@@ -1,0 +1,23 @@
+name: "in-cluster"
+address: "https://kubernetes.default.svc"
+values: |
+  ## RBAC creation for controller and speaker
+  ##
+  rbac:
+    ## @param rbac.create Specifies whether to install and use RBAC rules
+    ##
+    create: true
+
+  ## @param configInline Specifies MetalLB's configuration directly, in yaml format.
+  ## When configInline is used, Helm manages MetalLB's
+  ## configuration ConfigMap as part of the release, and
+  ## existingConfigMap is ignored.
+  ## Refer to https://metallb.universe.tf/configuration/ for
+  ## available options.
+  ##
+  configInline:
+    address-pools:
+      - name: default
+        protocol: layer2
+        addresses:
+          - 37.187.118.60-37.187.118.60

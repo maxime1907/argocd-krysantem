@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: sftp
+spec:
+  generators:
+    - git:
+        repoURL: https://github.com/maxime1907/argocd-krysantem.git
+        revision: HEAD
+        files:
+          - path: "sftp/**.yml"
+  template:
+    metadata:
+      name: '{{name}}-sftp'
+    spec:
+      project: default
+      source:
+        helm:
+          valueFiles:
+          - values.yaml
+          values: |-
+            {{values}}
+        repoURL: https://github.com/emberstack/docker-sftp.git
+        targetRevision: HEAD
+        path: "src/helm/sftp"
+
+      destination:
+        server: '{{address}}'
+        namespace: cloud
+
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true

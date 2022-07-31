@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: flood
+spec:
+  generators:
+    - git:
+        repoURL: https://github.com/maxime1907/argocd-krysantem.git
+        revision: HEAD
+        files:
+          - path: "flood/**.yml"
+  template:
+    metadata:
+      name: '{{name}}-flood'
+    spec:
+      project: default
+      source:
+        helm:
+          valueFiles:
+          - values.yaml
+          values: |-
+            {{values}}
+        repoURL: https://github.com/k8s-at-home/charts.git
+        targetRevision: HEAD
+        path: "charts/stable/flood"
+
+      destination:
+        server: '{{address}}'
+        namespace: cloud
+
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true

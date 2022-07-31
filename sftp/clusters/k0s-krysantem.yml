@@ -1,0 +1,36 @@
+name: "in-cluster"
+address: "https://kubernetes.default.svc"
+values: |
+  image:
+    repository: emberstack/sftp
+    tag: "latest"
+    pullPolicy: Always
+
+  serviceAccount:
+    # Specifies whether a service account should be created
+    create: false
+
+  service:
+    type: LoadBalancer
+    port: 2222
+    annotations:
+      metallb.universe.tf/allow-shared-ip: ingress-nginx
+
+  # User with UID/GID of qbittorrent
+  configuration:
+    Users:
+      - Username: torrent
+        Password: '$6$hTAOTguNl0$ngff1UtNPZGZzBzREj9k6Na.cLwzG1Ftc6q4KYVtlL6HpfVUgM5QLZwjBrdd./7owCRlaIluhHC4tRBjOiyt01'
+        PasswordIsEncrypted: true
+        UID: 568
+        GID: 568
+
+  storage:
+    volumeMounts:
+      - name: qbittorrent-downloads
+        mountPath: /home/torrent/downloads
+
+    volumes:
+      - name: qbittorrent-downloads
+        persistentVolumeClaim:
+          claimName: in-cluster-qbittorrent-downloads

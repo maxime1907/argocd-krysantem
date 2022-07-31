@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: ingress-nginx
+spec:
+  generators:
+    - git:
+        repoURL: https://github.com/maxime1907/argocd-krysantem.git
+        revision: HEAD
+        files:
+          - path: "ingress-nginx/**.yml"
+  template:
+    metadata:
+      name: '{{name}}-ingress-nginx'
+    spec:
+      project: default
+      source:
+        helm:
+          valueFiles:
+          - values.yaml
+          values: |-
+            {{values}}
+        repoURL: https://github.com/kubernetes/ingress-nginx.git
+        targetRevision: HEAD
+        path: "charts/ingress-nginx"
+
+      destination:
+        server: '{{address}}'
+        namespace: ingress-nginx
+
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true

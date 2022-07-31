@@ -1,0 +1,37 @@
+name: "in-cluster"
+address: "https://kubernetes.default.svc"
+values: |
+  ## Mariadb Primary parameters
+  ##
+  primary:
+    persistence:
+      ## @param primary.persistence.storageClass MariaDB primary persistent volume storage Class
+      ## If defined, storageClassName: <storageClass>
+      ## If set to "-", storageClassName: "", which disables dynamic provisioning
+      ## If undefined (the default) or set to null, no storageClassName spec is
+      ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+      ##   GKE, AWS & OpenStack)
+      ##
+      storageClass: "openebs-hostpath"
+      ## @param primary.persistence.size MariaDB primary persistent volume size
+      ##
+      size: 2Gi
+
+  ## MariaDB Authentication parameters
+  ##
+  auth:
+    ## @param auth.rootPassword Password for the `root` user. Ignored if existing secret is provided.
+    ## ref: https://github.com/bitnami/containers/tree/main/bitnami/mariadb#setting-the-root-password-on-first-run
+    ##
+    rootPassword: "FpyznoZZ49ePjag1MUUYsixCEnq76EVQy4s3m9BZz2otgtHQar"
+    ## @param auth.database Name for a custom database to create
+    ## ref: https://github.com/bitnami/containers/blob/main/bitnami/mariadb/README.md#creating-a-database-on-first-run
+    ##
+    database: pydiocells
+    ## @param auth.username Name for a custom user to create
+    ## ref: https://github.com/bitnami/containers/blob/main/bitnami/mariadb/README.md#creating-a-database-user-on-first-run
+    ##
+    username: "pydiocells"
+    ## @param auth.password Password for the new user. Ignored if existing secret is provided
+    ##
+    password: "KAGHPkTpNghoCwiSdOt2VHGOrSdWD4GaRxLuUBNvaEC3V556gL"

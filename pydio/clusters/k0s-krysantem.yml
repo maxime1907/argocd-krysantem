@@ -1,0 +1,128 @@
+name: "in-cluster"
+address: "https://kubernetes.default.svc"
+values: |
+  securityContext:
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+
+  podSecurityContext:
+    runAsUser: 1001
+    runAsGroup: 1001
+
+  pydioinstall:
+    username: "admin"
+    password: "supersecret"
+    title: "Pydio Cells"
+
+  probes:
+    liveness:
+      custom: true
+      spec:
+        httpGet:
+          scheme: HTTP
+          path: "/healthcheck"
+          port: 10162
+    readiness:
+      custom: true
+      spec:
+        httpGet:
+          scheme: HTTP
+          path: "/healthcheck"
+          port: 10162
+    startup:
+      custom: true
+      spec:
+        httpGet:
+          scheme: HTTP
+          path: "/healthcheck"
+          port: 10162
+
+  service:
+    main:
+      ports:
+        main:
+          protocol: HTTP
+          port: 10150
+    gprc:
+      enabled: true
+      ports:
+        gprc:
+          enabled: true
+          port: 33060
+    healthcheck:
+      enabled: true
+      ports:
+        healthcheck:
+          enabled: true
+          port: 10162
+
+  env:
+    CELLS_EXTERNAL: "https://localhost"
+    CELLS_NO_TLS: 1
+
+  persistence:
+    cells:
+      enabled: true
+      mountPath: "/cells"
+      storageClass: openebs-hostpath
+      size: 5Gi
+    data:
+      enabled: true
+      mountPath: "/cells/data"
+      storageClass: openebs-hostpath
+      size: 5Gi
+    logs:
+      enabled: true
+      mountPath: "/cells/logs"
+      storageClass: openebs-hostpath
+      size: 5Gi
+    services:
+      enabled: true
+      mountPath: "/cells/services"
+      storageClass: openebs-hostpath
+      size: 5Gi
+    pydiocells-install:
+      enabled: "true"
+      mountPath: "/cells/install.yml"
+      storageClass: openebs-hostpath
+      size: 5Gi
+      subPath: "pydiocells-install"
+      type: "custom"
+      volumeSpec:
+        configMap:
+          name: '{{ printf "%v-install" (include "tc.common.names.fullname" .) }}'
+
+  ingress:
+    # -- Enable and configure ingress settings for the chart under this key.
+    # @default -- See values.yaml
+    main:
+      enabled: true
+
+      # -- Provide additional annotations which may be required.
+      annotations:
+        cert-manager.io/cluster-issuer: cloudflare-letsencrypt
+
+      ingressClassName: "nginx"
+
+      ## Configure the hosts for the ingress
+      hosts:
+        -  # -- Host address. Helm template can be passed.
+          host: cloud.krysantem.net
+          ## Configure the paths for the host
+          paths:
+            -  # -- Path.  Helm template can be passed.
+              path: /
+              # -- Ignored if not kubeVersion >= 1.14-0
+              pathType: Prefix
+
+      # -- Configure TLS for the ingress. Both secretName and hosts can process a Helm template.
+      tls:
+      - secretName: cloud.krysantem.net-tls
+        hosts:
+          - cloud.krysantem.net
+
+  mariadb:
+    enabled: false
+    mariadbUsername: pydiocells
+    mariadbDatabase: pydiocells
+    mariadbPassword: KAGHPkTpNghoCwiSdOt2VHGOrSdWD4GaRxLuUBNvaEC3V556gL

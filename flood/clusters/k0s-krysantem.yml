@@ -1,0 +1,56 @@
+name: "in-cluster"
+address: "https://kubernetes.default.svc"
+values: |
+  # -- environment variables. See more environment variables in the [flood documentation] (https://github.com/jesec/flood/blob/v4.6.0/config.ts)
+  # Note: The environmental variables are not case sensitive (e.g. FLOOD_OPTION_port=FLOOD_OPTION_PORT).
+  # @default -- See below
+  env:
+    # -- Where to store Flood's runtime files (eg. database)
+    FLOOD_OPTION_RUNDIR: /data
+
+  # -- Configures service settings for the chart.
+  # @default -- See values.yaml
+  service:
+    main:
+      ports:
+        http:
+          port: 3000
+
+  ingress:
+    # -- Enable and configure ingress settings for the chart under this key.
+    # @default -- See values.yaml
+    main:
+      enabled: true
+
+      # -- Provide additional annotations which may be required.
+      annotations:
+        cert-manager.io/cluster-issuer: cloudflare-letsencrypt
+
+      ingressClassName: "nginx"
+
+      ## Configure the hosts for the ingress
+      hosts:
+        -  # -- Host address. Helm template can be passed.
+          host: torrent.krysantem.net
+          ## Configure the paths for the host
+          paths:
+            -  # -- Path.  Helm template can be passed.
+              path: /
+              # -- Ignored if not kubeVersion >= 1.14-0
+              pathType: Prefix
+
+      # -- Configure TLS for the ingress. Both secretName and hosts can process a Helm template.
+      tls:
+      - secretName: torrent.krysantem.net-tls
+        hosts:
+          - torrent.krysantem.net
+
+  # -- Configure persistence settings for the chart under this key.
+  # @default -- See values.yaml
+  persistence:
+    data:
+      enabled: true
+      storageClass: openebs-hostpath
+      mountPath: /data
+      accessMode: ReadWriteOnce
+      size: 5Gi

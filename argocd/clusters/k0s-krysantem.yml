@@ -1,0 +1,4 @@
+repoServer:
+  env:
+    - name: ARGOCD_EXEC_TIMEOUT
+      value: 10m

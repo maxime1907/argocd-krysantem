@@ -1,0 +1,4 @@
+name: "in-cluster"
+address: "https://kubernetes.default.svc"
+values: |
+  installCRDs: true

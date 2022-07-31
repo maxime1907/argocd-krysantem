@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: pydio
+spec:
+  generators:
+    - git:
+        repoURL: https://github.com/maxime1907/argocd-krysantem.git
+        revision: HEAD
+        files:
+          - path: "pydio/**.yml"
+  template:
+    metadata:
+      name: '{{name}}-pydio'
+    spec:
+      project: default
+      source:
+        helm:
+          valueFiles:
+          - values.yaml
+          values: |-
+            {{values}}
+        repoURL: https://github.com/truecharts/charts.git
+        targetRevision: pydio-cells-4.0.25
+        path: "charts/stable/pydio-cells"
+
+      destination:
+        server: '{{address}}'
+        namespace: cloud
+
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
