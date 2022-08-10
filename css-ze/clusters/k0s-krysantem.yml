@@ -1,0 +1,54 @@
+name: "in-cluster"
+address: "https://kubernetes.default.svc"
+values: |
+  ## @section SRCDS parameters
+  ##
+  srcds:
+    ## @param srcds.appid Application ID https://developer.valvesoftware.com/wiki/Dedicated_Servers_List
+    ##
+    appid: "232330"
+    ## @param srcds.hostname Name of the server
+    ##
+    hostname: "Source Engine Dedicated Server"
+    ## @param srcds.hostname Game type
+    ## cstrike, csgo...
+    ##
+    gametype: "cstrike"
+    ## @param srcds.tickrate tickrate
+    ##
+    tickrate: 128
+    ## @param srcds.fps maximum server fps
+    ##
+    fps: 144
+    ## @param srcds.maxplayers maximum players
+    ##
+    maxplayers: 64
+    ## @param srcds.map Map that will be launched at server startup
+    ##
+    map: "de_dust2"
+
+    ## srcds service configuration
+    ##
+    service:
+      ## @param srcds.service.type Kubernetes Service type
+      ##
+      type: LoadBalancer
+      ## @param srcds.service.ports ports
+      ##
+      ports:
+        ## @param srcds.service.ports.game
+        ##
+        game: 27015
+        ## @param srcds.service.ports.sourcetv
+        ##
+        sourcetv: 27020
+        ## @param srcds.service.ports.client
+        ##
+        client: 27005
+        ## @param srcds.service.ports.steam
+        ##
+        steam: 26900
+      ## @param srcds.service.annotations Annotations for srcds service
+      ##
+      annotations:
+        metallb.universe.tf/allow-shared-ip: ingress-nginx

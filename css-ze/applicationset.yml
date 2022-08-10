@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: srcds-css-ze
+spec:
+  generators:
+    - git:
+        repoURL: https://github.com/maxime1907/argocd-krysantem.git
+        revision: HEAD
+        files:
+          - path: "css-ze/**.yml"
+  template:
+    metadata:
+      name: '{{name}}-srcds-css-ze'
+    spec:
+      project: default
+      source:
+        helm:
+          valueFiles:
+          - values.yaml
+          values: |-
+            {{values}}
+        repoURL: https://github.com/srcdslab/helm-charts.git
+        targetRevision: HEAD
+        path: "charts/srcds"
+
+      destination:
+        server: '{{address}}'
+        namespace: srcds-css-ze
+
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
