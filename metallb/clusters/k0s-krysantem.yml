@@ -8,16 +8,16 @@ values: |
     ##
     create: true
 
-  ## @param configInline Specifies MetalLB's configuration directly, in yaml format.
-  ## When configInline is used, Helm manages MetalLB's
-  ## configuration ConfigMap as part of the release, and
-  ## existingConfigMap is ignored.
-  ## Refer to https://metallb.universe.tf/configuration/ for
-  ## available options.
-  ##
-  configInline:
-    address-pools:
-      - name: default
-        protocol: layer2
+  extraDeploy:
+    - apiVersion: metallb.io/v1beta1
+      kind: IPAddressPool
+      metadata:
+        name: prod
+      spec:
         addresses:
-          - 37.187.118.60-37.187.118.60
+        - 37.187.118.60-37.187.118.60
+
+    - apiVersion: metallb.io/v1beta1
+      kind: L2Advertisement
+      metadata:
+        name: prod
