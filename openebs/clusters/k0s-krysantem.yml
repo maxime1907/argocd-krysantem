@@ -1,3 +1,6 @@
-name: "in-cluster"
+name: "ovh-krysantem-gra1-prod"
 address: "https://kubernetes.default.svc"
 values: |
+  localprovisioner:
+    hostpathClass:
+      isDefaultClass: true
