@@ -1,5 +1,5 @@
 name: "ovh-krysantem-gra1-prod"
-address: "https://kubernetes.default.svc"
+address: "https://ovh-krysantem-gra1-prod.svc"
 values: |
   localprovisioner:
     hostpathClass:
