@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: openebs
+spec:
+  generators:
+    - git:
+        repoURL: https://github.com/maxime1907/argocd-krysantem.git
+        revision: HEAD
+        files:
+          - path: "openebs/**.yml"
+  template:
+    metadata:
+      name: '{{name}}-openebs'
+    spec:
+      project: default
+      source:
+        helm:
+          valueFiles:
+          - values.yaml
+          values: |-
+            {{values}}
+        repoURL: https://github.com/openebs/charts.git
+        targetRevision: HEAD
+        path: "charts/openebs"
+
+      destination:
+        server: '{{address}}'
+        namespace: openebs
+
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
