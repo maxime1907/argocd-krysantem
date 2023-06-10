@@ -15,8 +15,6 @@ spec:
     spec:
       project: default
       source:
-        helm:
-          releaseName: cert-manager-cr
         repoURL: https://github.com/maxime1907/argocd-krysantem.git
         targetRevision: HEAD
         path: "cert-manager-cr/resources"
