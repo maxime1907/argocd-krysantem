@@ -21,9 +21,9 @@ spec:
           - values.yaml
           values: |-
             {{values}}
-        repoURL: https://github.com/bitnami-labs/sealed-secrets.git
-        targetRevision: HEAD
-        path: "helm/sealed-secrets"
+        repoURL: https://bitnami-labs.github.io/sealed-secrets
+        targetRevision: "2.9.0"
+        chart: sealed-secrets
 
       destination:
         server: '{{address}}'
