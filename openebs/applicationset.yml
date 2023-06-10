@@ -21,9 +21,9 @@ spec:
           - values.yaml
           values: |-
             {{values}}
-        repoURL: https://github.com/openebs/charts.git
-        targetRevision: HEAD
-        path: "charts/openebs"
+        repoURL: https://openebs.github.io/charts
+        targetRevision: "3.7.0"
+        chart: openebs
 
       destination:
         server: '{{address}}'
