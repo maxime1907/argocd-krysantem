@@ -16,13 +16,14 @@ spec:
       project: default
       source:
         helm:
+          releaseName: sftp
           valueFiles:
           - values.yaml
           values: |-
             {{values}}
-        repoURL: https://github.com/emberstack/docker-sftp.git
-        targetRevision: HEAD
-        path: "src/helm/sftp"
+        repoURL: https://emberstack.github.io/helm-charts
+        targetRevision: "5.1.5"
+        chart: sftp
 
       destination:
         server: '{{address}}'
