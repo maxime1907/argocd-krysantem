@@ -16,13 +16,14 @@ spec:
       project: default
       source:
         helm:
+          releaseName: ingress-nginx
           valueFiles:
           - values.yaml
           values: |-
             {{values}}
-        repoURL: https://github.com/kubernetes/ingress-nginx.git
-        targetRevision: HEAD
-        path: "charts/ingress-nginx"
+        repoURL: https://kubernetes.github.io
+        targetRevision: "4.7.0"
+        chart: ingress-nginx
 
       destination:
         server: '{{address}}'
