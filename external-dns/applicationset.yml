@@ -27,7 +27,7 @@ spec:
 
       destination:
         server: '{{address}}'
-        namespace: external-dns
+        namespace: cert-manager
 
       syncPolicy:
         automated:
