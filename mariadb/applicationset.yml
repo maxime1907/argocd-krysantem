@@ -16,6 +16,7 @@ spec:
       project: default
       source:
         helm:
+          releaseName: mariadb
           valueFiles:
           - values.yaml
           values: |-

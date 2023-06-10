@@ -16,13 +16,14 @@ spec:
       project: default
       source:
         helm:
+          releaseName: flood
           valueFiles:
           - values.yaml
           values: |-
             {{values}}
-        repoURL: https://github.com/k8s-at-home/charts.git
-        targetRevision: HEAD
-        path: "charts/stable/flood"
+        repoURL: https://k8s-at-home.com/charts
+        targetRevision: "6.4.2"
+        chart: flood
 
       destination:
         server: '{{address}}'
