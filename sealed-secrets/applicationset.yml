@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: sealed-secrets
+  name: sealed-secrets-set
 spec:
   generators:
     - git:
@@ -11,7 +11,7 @@ spec:
           - path: "sealed-secrets/**.yml"
   template:
     metadata:
-      name: '{{name}}-sealed-secrets'
+      name: 'sealed-secrets'
     spec:
       project: default
       source:

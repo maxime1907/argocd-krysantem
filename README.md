@@ -63,7 +63,46 @@ helm repo add argo https://argoproj.github.io/argo-helm
 helm install -n argocd --create-namespace argocd argo/argo-cd --version 5.27.3 --values argocd/clusters/k0s-krysantem.yml
 ```
 
-## Install openebs
+### Install openebs
 ```bash
 kubectl apply -f openebs/applicationset.yml -n argocd
+```
+
+## Cluster configuration
+### Secrets
+We use bitnami sealed secrets with our own keys that we initially have to generate
+This tutorial are parts of the blog written here:
+- https://dev.to/ashokan/sealed-secrets-bring-your-own-keys-and-multi-cluster-scenario-1ee8
+#### Create acme keys
+```bash
+export PRIVATEKEY="acmetls.key"
+export PUBLICKEY="acmetls.crt"
+export NAMESPACE="sealed-secrets"
+export CONTROLLER="sealed-secrets"
+export SECRETNAME="sealed-secrets-key"
+
+openssl req -x509 -nodes -newkey rsa:4096 -keyout "$PRIVATEKEY" -out "$PUBLICKEY" -subj "/CN=sealed-secret/O=sealed-secret"
+
+kubectl create ns "$NAMESPACE" --context $KUBE_CONTEXT
+
+kubectl -n "$NAMESPACE" create secret tls "$SECRETNAME" --cert="$PUBLICKEY" --key="$PRIVATEKEY" --context $KUBE_CONTEXT
+```
+
+#### Create the application
+```bash
+export KUBE_CONTEXT="kubernetes-admin@ovh-krysantem-gra1-prod"
+
+kubectl apply -f sealed-secrets/applicationset.yml -n argocd --context $KUBE_CONTEXT
+```
+
+#### Encrypt a secret
+```bash
+export SECRET="secret.yml"
+export SEALED_SECRET="sealed-secret.yml"
+
+kubeseal \
+    --controller-name $CONTROLLER \
+    --controller-namespace $NAMESPACE \
+    --secret-file $SECRET \
+    --sealed-secret-file $SEALED_SECRET
 ```
