@@ -50,7 +50,6 @@ values: |
   persistence:
     data:
       enabled: true
-      storageClass: openebs-hostpath
       mountPath: /data
       accessMode: ReadWriteOnce
       size: 5Gi

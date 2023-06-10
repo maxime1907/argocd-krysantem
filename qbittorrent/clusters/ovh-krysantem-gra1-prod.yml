@@ -58,7 +58,6 @@ values: |
   persistence:
     config:
       enabled: true
-      storageClass: openebs-hostpath
 
     media:
       enabled: false
@@ -66,7 +65,6 @@ values: |
 
     downloads:
       enabled: true
-      storageClass: openebs-hostpath
       mountPath: /downloads
       accessMode: ReadWriteOnce
       size: 1000Gi

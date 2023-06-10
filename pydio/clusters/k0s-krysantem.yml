@@ -64,27 +64,22 @@ values: |
     cells:
       enabled: true
       mountPath: "/cells"
-      storageClass: openebs-hostpath
       size: 5Gi
     data:
       enabled: true
       mountPath: "/cells/data"
-      storageClass: openebs-hostpath
       size: 5Gi
     logs:
       enabled: true
       mountPath: "/cells/logs"
-      storageClass: openebs-hostpath
       size: 5Gi
     services:
       enabled: true
       mountPath: "/cells/services"
-      storageClass: openebs-hostpath
       size: 5Gi
     pydiocells-install:
       enabled: "true"
       mountPath: "/cells/install.yml"
-      storageClass: openebs-hostpath
       size: 5Gi
       subPath: "pydiocells-install"
       type: "custom"
