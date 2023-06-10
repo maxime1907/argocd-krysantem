@@ -16,6 +16,7 @@ spec:
       project: default
       source:
         helm:
+          releaseName: openebs
           valueFiles:
           - values.yaml
           values: |-

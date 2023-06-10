@@ -11,7 +11,7 @@ spec:
           - path: "sealed-secrets/**.yml"
   template:
     metadata:
-      name: '{{name}}-{{path.basename}}'
+      name: '{{name}}-sealed-secrets'
     spec:
       project: default
       source:
