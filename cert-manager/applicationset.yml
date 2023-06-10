@@ -16,6 +16,7 @@ spec:
       project: default
       source:
         helm:
+          releaseName: cert-manager
           valueFiles:
           - values.yaml
           values: |-
