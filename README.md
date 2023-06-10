@@ -99,10 +99,13 @@ kubectl apply -f sealed-secrets/applicationset.yml -n argocd --context $KUBE_CON
 ```bash
 export SECRET="secret.yml"
 export SEALED_SECRET="sealed-secret.yml"
+export SCOPE="cluster-wide"
 
 kubeseal \
     --controller-name $CONTROLLER \
     --controller-namespace $NAMESPACE \
     --secret-file $SECRET \
-    --sealed-secret-file $SEALED_SECRET
+    --sealed-secret-file $SEALED_SECRET \
+    --scope cluster-wide \
+    --context $KUBE_CONTEXT
 ```
