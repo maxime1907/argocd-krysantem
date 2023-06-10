@@ -21,7 +21,7 @@ spec:
           - values.yaml
           values: |-
             {{values}}
-        repoURL: https://kubernetes.github.io
+        repoURL: https://kubernetes.github.io/ingress-nginx
         targetRevision: "4.7.0"
         chart: ingress-nginx
 
