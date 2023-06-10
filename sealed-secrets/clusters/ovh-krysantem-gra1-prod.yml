@@ -1,0 +1,10 @@
+name: "in-cluster"
+address: "https://kubernetes.default.svc"
+values: |
+  ## Sealed Secret ingress parameters
+  ## ref: http://kubernetes.io/docs/user-guide/ingress/
+  ##
+  ingress:
+    ## @param ingress.enabled Enable ingress record generation for Sealed Secret
+    ##
+    enabled: false

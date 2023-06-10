@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: sealed-secrets
+spec:
+  generators:
+    - git:
+        repoURL: https://github.com/maxime1907/argocd-krysantem.git
+        revision: HEAD
+        files:
+          - path: "sealed-secrets/**.yml"
+  template:
+    metadata:
+      name: '{{name}}-sealed-secrets'
+    spec:
+      project: default
+      source:
+        helm:
+          valueFiles:
+          - values.yaml
+          values: |-
+            {{values}}
+        repoURL: https://github.com/bitnami-labs/sealed-secrets.git
+        targetRevision: HEAD
+        path: "helm/sealed-secrets"
+
+      destination:
+        server: '{{address}}'
+        namespace: sealed-secrets
+
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true

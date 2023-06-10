@@ -18,4 +18,4 @@ values: |
     - krysantem.net
 
   extraArgs:
-    default-targets: 37.187.118.60
+    default-targets: 37.187.117.192
