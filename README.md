@@ -60,7 +60,12 @@ choco install kubernetes-helm
 git clone https://github.com/maxime1907/argocd-krysantem argocd
 cd argocd
 helm repo add argo https://argoproj.github.io/argo-helm
-helm install -n argocd --create-namespace argocd argo/argo-cd --version 5.27.3 --values argocd/clusters/k0s-krysantem.yml
+helm install -n argocd --create-namespace argocd argo/argo-cd --version 5.36.1 --values argocd/clusters/ovh-krysantem-gra1-prod.yml
+```
+
+### Upgrade argocd
+```bash
+helm upgrade -n argocd argocd argo/argo-cd --version 5.36.1 --values argocd/clusters/ovh-krysantem-gra1-prod.yml --kube-context $KUBE_CONTEXT
 ```
 
 ### Install openebs
