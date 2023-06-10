@@ -1,5 +1,5 @@
-name: "ovh-krysantem-gra1-prod"
-address: "https://ovh-krysantem-gra1-prod.svc"
+name: "in-cluster"
+address: "https://kubernetes.default.svc"
 values: |
   # -- environment variables. See [image docs](https://docs.k8s-at-home.com/our-container-images/configuration/) for more details.
   # @default -- See below
