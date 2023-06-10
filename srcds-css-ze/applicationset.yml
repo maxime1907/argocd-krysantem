@@ -16,13 +16,14 @@ spec:
       project: default
       source:
         helm:
+          releaseName: srcds-css-ze
           valueFiles:
           - values.yaml
           values: |-
             {{values}}
-        repoURL: https://github.com/srcdslab/helm-charts.git
-        targetRevision: HEAD
-        path: "charts/srcds"
+        repoURL: https://srcdslab.github.io/helm-charts
+        targetRevision: "0.0.3"
+        chart: srcds
 
       destination:
         server: '{{address}}'
