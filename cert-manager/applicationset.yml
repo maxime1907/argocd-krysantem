@@ -21,7 +21,7 @@ spec:
           - values.yaml
           values: |-
             {{values}}
-        repoURL: oci://registry-1.docker.io/bitnamicharts/cert-manager
+        repoURL: registry-1.docker.io/bitnamicharts/cert-manager
         targetRevision: "0.11.3"
         chart: cert-manager
 
