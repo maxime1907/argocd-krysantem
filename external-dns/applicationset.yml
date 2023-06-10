@@ -16,13 +16,14 @@ spec:
       project: default
       source:
         helm:
+          releaseName: external-dns
           valueFiles:
           - values.yaml
           values: |-
             {{values}}
-        repoURL: https://github.com/bitnami/charts.git
-        targetRevision: HEAD
-        path: "bitnami/external-dns"
+        repoURL: registry-1.docker.io/bitnamicharts
+        targetRevision: "6.20.3"
+        chart: external-dns
 
       destination:
         server: '{{address}}'
