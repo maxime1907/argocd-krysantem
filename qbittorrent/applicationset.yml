@@ -20,9 +20,9 @@ spec:
           - values.yaml
           values: |-
             {{values}}
-        repoURL: https://github.com/k8s-at-home/charts.git
-        targetRevision: HEAD
-        path: "charts/stable/qbittorrent"
+        repoURL: https://k8s-at-home.com/charts
+        targetRevision: "13.5.2"
+        chart: qbittorrent
 
       destination:
         server: '{{address}}'
