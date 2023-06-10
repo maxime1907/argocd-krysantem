@@ -16,7 +16,7 @@ spec:
       project: default
       source:
         helm:
-          releaseName: '{{path.basename}}'
+          releaseName: sealed-secrets
           valueFiles:
           - values.yaml
           values: |-
