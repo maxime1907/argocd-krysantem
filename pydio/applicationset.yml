@@ -16,13 +16,14 @@ spec:
       project: default
       source:
         helm:
+          releaseName: pydio
           valueFiles:
           - values.yaml
           values: |-
             {{values}}
-        repoURL: https://github.com/truecharts/charts.git
-        targetRevision: pydio-cells-4.0.25
-        path: "charts/stable/pydio-cells"
+        repoURL: https://charts.truecharts.org
+        targetRevision: "7.0.23"
+        chart: pydio-cells
 
       destination:
         server: '{{address}}'
