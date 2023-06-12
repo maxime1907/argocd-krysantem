@@ -24,7 +24,7 @@ jobs:
         uses: './.github/actions/setup-kube-context'
 
   deploy:
-    name: Deploy ${{ matrix.kube-context }}
+    name: Deploy ${{ matrix.kube-context }} ${{ matrix.argocd-service }}
     needs: configuration
     runs-on: ${{ matrix.os }}
     strategy:
