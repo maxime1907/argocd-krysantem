@@ -24,3 +24,5 @@ values: |
       spec:
         ipAddressPools:
           - prod
+        interfaces:
+          - priv0
