@@ -1,0 +1,47 @@
+name: Setup kube context
+
+description: 'Sets up kube context environment for jobs during CI workflow'
+
+inputs:
+  clusters-version:
+    description: 'Cluster list version'
+    required: false
+    default: "1.0.0"
+
+outputs:
+  kube-context:
+    description: 'The list of kube contexts'
+    value: ${{ steps.get-kube-contexts.outputs.KUBE_CONTEXT }}
+
+runs:
+  using: composite
+  steps:
+    - name: Set up yq
+      uses: mikefarah/yq@v4.34.1
+
+    - name: Get kube cluster names
+      id: get-kube-contexts
+      shell: bash
+      env:
+        CLUSTERS_VERSION: ${{ inputs.clusters-version }}
+      run: |
+        echo $CLUSTERS_VERSION
+        curl -L https://raw.githubusercontent.com/maxime1907/infrastructure-krysantem/v$CLUSTERS_VERSION/clusters.yml -o clusters.yml
+
+        readarray cluster_names < <(yq e -o=j -I=0 '.clusters[]' clusters.yml )
+
+        kube_contexts_json="["
+        index=1
+        cluster_names_count="${#cluster_names[@]}"
+        for cluster_name in "${cluster_names[@]}"; do
+            cluster_name_upper=$(echo $cluster_name | tr [:lower:] [:upper:] | tr "-" "_" | tr -d '"')
+            kube_contexts_json="${kube_contexts_json}\"KUBE_CONTEXT_ADMIN_${cluster_name_upper}\""
+            if [[ "$index" != "$cluster_names_count" ]]; then
+                kube_contexts_json="${kube_contexts_json},"
+            fi
+            let "index=index+1"
+        done
+
+        kube_contexts_json="${kube_contexts_json}]"
+
+        echo "KUBE_CONTEXT=$kube_contexts_json" >> $GITHUB_OUTPUT

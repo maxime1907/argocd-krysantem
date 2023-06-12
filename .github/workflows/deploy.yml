@@ -1,0 +1,53 @@
+name: "Deploy action"
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  configuration:
+    name: "Setup github matrix"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - 'ubuntu-latest'
+    outputs:
+      kube-context: ${{ steps.set-matrix.outputs.kube-context }}
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v3
+      - id: set-matrix
+        uses: './.github/actions/setup-kube-context'
+
+  deploy:
+    name: Deploy ${{ matrix.kube-context }}
+    needs: configuration
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - 'ubuntu-latest'
+        kube-context: ${{ fromJson(needs.configuration.outputs.kube-context) }}
+        argocd-service:
+            - cert-manager
+            - cert-manager-cr
+            - external-dns
+            - ingress-nginx
+            - metallb
+            - openebs
+            - sealed-secrets
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v3
+
+      - name: Install services
+        uses: actions-hub/kubectl@v1.26.3
+        env:
+          KUBE_CONFIG: ${{ secrets[format('{0}', matrix.kube-context)] }}
+        with:
+          args: apply -f argocd/${{ matrix.argocd-service }}/applicationset.yml -n argocd
