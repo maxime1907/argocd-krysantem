@@ -1,29 +1,29 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: pydio
+  name: flood
 spec:
   generators:
     - git:
         repoURL: https://github.com/maxime1907/argocd-krysantem.git
         revision: HEAD
         files:
-          - path: "pydio/**.yml"
+          - path: "argocd/flood/**.yml"
   template:
     metadata:
-      name: '{{name}}-pydio'
+      name: '{{name}}-flood'
     spec:
       project: default
       source:
         helm:
-          releaseName: pydio
+          releaseName: flood
           valueFiles:
           - values.yaml
           values: |-
             {{values}}
-        repoURL: https://charts.truecharts.org
-        targetRevision: "7.0.23"
-        chart: pydio-cells
+        repoURL: https://k8s-at-home.com/charts
+        targetRevision: "6.4.2"
+        chart: flood
 
       destination:
         server: '{{address}}'

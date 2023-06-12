@@ -1,27 +1,33 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: cert-manager-cr
+  name: pydio-mariadb
 spec:
   generators:
     - git:
         repoURL: https://github.com/maxime1907/argocd-krysantem.git
         revision: HEAD
         files:
-          - path: "cert-manager-cr/**.yml"
+          - path: "argocd/mariadb/**.yml"
   template:
     metadata:
-      name: '{{name}}-cert-manager-cr'
+      name: '{{name}}-pydio-mariadb'
     spec:
       project: default
       source:
-        repoURL: https://github.com/maxime1907/argocd-krysantem.git
-        targetRevision: HEAD
-        path: "cert-manager-cr/resources"
+        helm:
+          releaseName: mariadb
+          valueFiles:
+          - values.yaml
+          values: |-
+            {{values}}
+        repoURL: registry-1.docker.io/bitnamicharts
+        targetRevision: "12.2.5"
+        chart: mariadb
 
       destination:
         server: '{{address}}'
-        namespace: cert-manager
+        namespace: cloud
 
       syncPolicy:
         automated:

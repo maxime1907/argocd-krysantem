@@ -1,33 +1,33 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: openebs
+  name: sealed-secrets
 spec:
   generators:
     - git:
         repoURL: https://github.com/maxime1907/argocd-krysantem.git
         revision: HEAD
         files:
-          - path: "openebs/**.yml"
+          - path: "argocd/sealed-secrets/**.yml"
   template:
     metadata:
-      name: '{{name}}-openebs'
+      name: '{{name}}-sealed-secrets'
     spec:
       project: default
       source:
         helm:
-          releaseName: openebs
+          releaseName: sealed-secrets
           valueFiles:
           - values.yaml
           values: |-
             {{values}}
-        repoURL: https://openebs.github.io/charts
-        targetRevision: "3.7.0"
-        chart: openebs
+        repoURL: https://bitnami-labs.github.io/sealed-secrets
+        targetRevision: "2.9.0"
+        chart: sealed-secrets
 
       destination:
         server: '{{address}}'
-        namespace: openebs
+        namespace: sealed-secrets
 
       syncPolicy:
         automated:
