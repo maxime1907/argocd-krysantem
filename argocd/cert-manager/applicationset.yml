@@ -8,7 +8,7 @@ spec:
         repoURL: https://github.com/maxime1907/argocd-krysantem.git
         revision: HEAD
         files:
-          - path: "cert-manager/**.yml"
+          - path: "argocd/cert-manager/**.yml"
   template:
     metadata:
       name: '{{name}}-cert-manager'

@@ -1,29 +1,29 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: qbittorrent
+  name: pydio
 spec:
   generators:
     - git:
         repoURL: https://github.com/maxime1907/argocd-krysantem.git
         revision: HEAD
         files:
-          - path: "qbittorrent/**.yml"
+          - path: "argocd/pydio/**.yml"
   template:
     metadata:
-      name: '{{name}}-qbittorrent'
+      name: '{{name}}-pydio'
     spec:
       project: default
       source:
         helm:
-          releaseName: qbittorrent
+          releaseName: pydio
           valueFiles:
           - values.yaml
           values: |-
             {{values}}
-        repoURL: https://k8s-at-home.com/charts
-        targetRevision: "13.5.2"
-        chart: qbittorrent
+        repoURL: https://charts.truecharts.org
+        targetRevision: "7.0.23"
+        chart: pydio-cells
 
       destination:
         server: '{{address}}'

@@ -1,33 +1,33 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: ingress-nginx
+  name: sftp
 spec:
   generators:
     - git:
         repoURL: https://github.com/maxime1907/argocd-krysantem.git
         revision: HEAD
         files:
-          - path: "ingress-nginx/**.yml"
+          - path: "argocd/sftp/**.yml"
   template:
     metadata:
-      name: '{{name}}-ingress-nginx'
+      name: '{{name}}-sftp'
     spec:
       project: default
       source:
         helm:
-          releaseName: ingress-nginx
+          releaseName: sftp
           valueFiles:
           - values.yaml
           values: |-
             {{values}}
-        repoURL: https://kubernetes.github.io/ingress-nginx
-        targetRevision: "4.7.0"
-        chart: ingress-nginx
+        repoURL: https://emberstack.github.io/helm-charts
+        targetRevision: "5.1.5"
+        chart: sftp
 
       destination:
         server: '{{address}}'
-        namespace: ingress-nginx
+        namespace: cloud
 
       syncPolicy:
         automated:

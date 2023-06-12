@@ -1,33 +1,33 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: sftp
+  name: srcds-css-ze
 spec:
   generators:
     - git:
         repoURL: https://github.com/maxime1907/argocd-krysantem.git
         revision: HEAD
         files:
-          - path: "sftp/**.yml"
+          - path: "argocd/css-ze/**.yml"
   template:
     metadata:
-      name: '{{name}}-sftp'
+      name: '{{name}}-srcds-css-ze'
     spec:
       project: default
       source:
         helm:
-          releaseName: sftp
+          releaseName: srcds-css-ze
           valueFiles:
           - values.yaml
           values: |-
             {{values}}
-        repoURL: https://emberstack.github.io/helm-charts
-        targetRevision: "5.1.5"
-        chart: sftp
+        repoURL: https://srcdslab.github.io/helm-charts
+        targetRevision: "0.0.3"
+        chart: srcds
 
       destination:
         server: '{{address}}'
-        namespace: cloud
+        namespace: srcds-css-ze
 
       syncPolicy:
         automated:

@@ -1,33 +1,33 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: metallb
+  name: qbittorrent
 spec:
   generators:
     - git:
         repoURL: https://github.com/maxime1907/argocd-krysantem.git
         revision: HEAD
         files:
-          - path: "metallb/**.yml"
+          - path: "argocd/qbittorrent/**.yml"
   template:
     metadata:
-      name: '{{name}}-metallb'
+      name: '{{name}}-qbittorrent'
     spec:
       project: default
       source:
         helm:
-          releaseName: metallb
+          releaseName: qbittorrent
           valueFiles:
           - values.yaml
           values: |-
             {{values}}
-        repoURL: registry-1.docker.io/bitnamicharts
-        targetRevision: "4.5.3"
-        chart: metallb
+        repoURL: https://k8s-at-home.com/charts
+        targetRevision: "13.5.2"
+        chart: qbittorrent
 
       destination:
         server: '{{address}}'
-        namespace: metallb-system
+        namespace: cloud
 
       syncPolicy:
         automated:

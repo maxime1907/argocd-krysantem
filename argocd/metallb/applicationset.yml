@@ -1,33 +1,33 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: flood
+  name: metallb
 spec:
   generators:
     - git:
         repoURL: https://github.com/maxime1907/argocd-krysantem.git
         revision: HEAD
         files:
-          - path: "flood/**.yml"
+          - path: "argocd/metallb/**.yml"
   template:
     metadata:
-      name: '{{name}}-flood'
+      name: '{{name}}-metallb'
     spec:
       project: default
       source:
         helm:
-          releaseName: flood
+          releaseName: metallb
           valueFiles:
           - values.yaml
           values: |-
             {{values}}
-        repoURL: https://k8s-at-home.com/charts
-        targetRevision: "6.4.2"
-        chart: flood
+        repoURL: registry-1.docker.io/bitnamicharts
+        targetRevision: "4.5.3"
+        chart: metallb
 
       destination:
         server: '{{address}}'
-        namespace: cloud
+        namespace: metallb-system
 
       syncPolicy:
         automated:
