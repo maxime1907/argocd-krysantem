@@ -17,7 +17,7 @@ spec:
       source:
         repoURL: https://github.com/maxime1907/argocd-krysantem.git
         targetRevision: HEAD
-        path: "cert-manager-cr/resources"
+        path: "argocd/cert-manager-cr/resources"
 
       destination:
         server: '{{address}}'

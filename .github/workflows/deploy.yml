@@ -36,7 +36,7 @@ jobs:
         argocd-service:
             - cert-manager
             - cert-manager-cr
-            - external-dns
+            # - external-dns
             - ingress-nginx
             - metallb
             - openebs
