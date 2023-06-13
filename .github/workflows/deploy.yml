@@ -42,7 +42,7 @@ jobs:
             - openebs
             - qbittorrent
             - sealed-secrets
-            - sftp
+            - sftpgo
     steps:
       - name: Git checkout
         uses: actions/checkout@v3
