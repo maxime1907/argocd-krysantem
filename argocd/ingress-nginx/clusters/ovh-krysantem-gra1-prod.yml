@@ -19,6 +19,6 @@ values: |
     # -- Annotations to be added to the service
     ##
     service:
-      enabled: true
+      enabled: false
       annotations:
         metallb.universe.tf/allow-shared-ip: ingress-nginx
