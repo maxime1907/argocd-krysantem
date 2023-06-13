@@ -11,7 +11,7 @@ values: |
     create: false
 
   service:
-    type: LoadBalancer
+    type: NodePort
     port: 2222
     annotations:
       metallb.universe.tf/allow-shared-ip: ingress-nginx
@@ -33,4 +33,4 @@ values: |
     volumes:
       - name: qbittorrent-downloads
         persistentVolumeClaim:
-          claimName: in-cluster-qbittorrent-downloads
+          claimName: qbittorrent-downloads

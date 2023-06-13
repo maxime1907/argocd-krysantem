@@ -36,10 +36,13 @@ jobs:
             - cert-manager
             - cert-manager-cr
             # - external-dns
+            - flood
             - ingress-nginx
-            - metallb
+            # - metallb
             - openebs
+            - qbittorrent
             - sealed-secrets
+            - sftp
     steps:
       - name: Git checkout
         uses: actions/checkout@v3
