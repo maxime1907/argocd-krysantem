@@ -19,7 +19,7 @@ helm install -n argocd --create-namespace argocd argo/argo-cd --version 5.36.1 -
 
 ## Upgrade argocd
 ```bash
-helm upgrade -n argocd argocd argo/argo-cd --version 5.36.1 --values argocd/clusters/ovh-krysantem-gra1-prod.yml --kube-context $KUBE_CONTEXT
+helm upgrade -n argocd argocd argo/argo-cd --version 5.36.1 --values helm/argocd/clusters/ovh-krysantem-gra1-prod.yml --kube-context $KUBE_CONTEXT
 ```
 
 # Cluster configuration
