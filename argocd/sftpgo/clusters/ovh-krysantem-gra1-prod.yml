@@ -15,18 +15,23 @@ values: |
     backupdirectory:
       enabled: true
       mountPath: /srv/sftpgo/backups
+      size: 1Gi
     configpath:
       enabled: true
       mountPath: /var/lib/sftpgo
+      size: 1Gi
     data:
       enabled: true
       mountPath: /srv/sftpgo/data
+      size: 1Gi
     shareaccess:
       enabled: true
       mountPath: /unraid
+      size: 1Gi
     qbittorrentdownloads:
       enabled: true
       mountPath: /home/torrent/downloads
+      size: 1Gi
   podSecurityContext:
     runAsGroup: 568
     runAsUser: 568
@@ -76,4 +81,5 @@ values: |
   portal:
     enabled: true
 
-  hostNetwork: true
+  podOptions:
+    hostNetwork: true
