@@ -28,10 +28,12 @@ values: |
       enabled: true
       mountPath: /unraid
       size: 1Gi
-    qbittorrentdownloads:
+  deviceList
+    - name: qbittorrent-downloads
       enabled: true
-      mountPath: /home/torrent/downloads
-      size: 1Gi
+      type: device
+      hostPath: /home/torrents
+      readOnly: true
   podSecurityContext:
     runAsGroup: 568
     runAsUser: 568
