@@ -2,3 +2,16 @@ repoServer:
   env:
     - name: ARGOCD_EXEC_TIMEOUT
       value: 10m
+
+server:
+  ingress:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: cloudflare-letsencrypt
+    ingressClassName: "nginx"
+    hosts:
+      - argocd.krysantem.net
+    tls:
+    - secretName: argocd.krysantem.net-tls
+      hosts:
+        - argocd.krysantem.net
