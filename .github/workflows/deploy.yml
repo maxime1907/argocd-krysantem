@@ -2,9 +2,8 @@ name: "Deploy action"
 
 on:
   push:
-    branches:
-      - main
-      - master
+    tags:
+      - "*"
 
 jobs:
   configuration:
