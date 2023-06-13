@@ -24,7 +24,7 @@ values: |
       metallb.universe.tf/allow-shared-ip: ingress-nginx
 
     # -- Kubernetes [service type](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types).
-    type: NodePort
+    type: ClusterIP
 
     ports:
       sftp:
@@ -32,8 +32,8 @@ values: |
         port: 2222
 
         # -- (int) SFTP node port (when applicable).
-        nodePort: 2222
+        nodePort:
 
   # -- Run pods in the host network of nodes.
   # Warning: The use of host network is [discouraged](https://kubernetes.io/docs/concepts/configuration/overview/#services). Make sure to use it only when absolutely necessary.
-  hostNetwork: false
+  hostNetwork: true
