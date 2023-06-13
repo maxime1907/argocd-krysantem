@@ -14,7 +14,8 @@ values: |
       metadata:
         name: prod
       spec:
-        addresses: []
+        addresses:
+          - 10.1.0.2-10.1.0.100
 
     - apiVersion: metallb.io/v1beta1
       kind: L2Advertisement
