@@ -21,8 +21,8 @@ spec:
           - values.yaml
           values: |-
             {{values}}
-        repoURL: https://emberstack.github.io/helm-charts
-        targetRevision: "5.1.5"
+        repoURL: https://charts.sagikazarmark.dev
+        targetRevision: "0.16.0"
         chart: sftpgo
 
       destination:
