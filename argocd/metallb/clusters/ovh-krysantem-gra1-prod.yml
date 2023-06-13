@@ -25,4 +25,4 @@ values: |
         ipAddressPools:
           - prod
         interfaces:
-          - eno0
+          - kube-ipvs0
