@@ -1,29 +1,29 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: sftp
+  name: sftpgo
 spec:
   generators:
     - git:
         repoURL: https://github.com/maxime1907/argocd-krysantem.git
         revision: HEAD
         files:
-          - path: "argocd/sftp/**.yml"
+          - path: "argocd/sftpgo/**.yml"
   template:
     metadata:
-      name: '{{name}}-sftp'
+      name: '{{name}}-sftpgo'
     spec:
       project: default
       source:
         helm:
-          releaseName: sftp
+          releaseName: sftpgo
           valueFiles:
           - values.yaml
           values: |-
             {{values}}
         repoURL: https://emberstack.github.io/helm-charts
         targetRevision: "5.1.5"
-        chart: sftp
+        chart: sftpgo
 
       destination:
         server: '{{address}}'
