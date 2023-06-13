@@ -15,7 +15,7 @@ values: |
         name: prod
       spec:
         addresses:
-          - 37.187.117.192/32
+          - 10.0.0.2/32
 
     - apiVersion: metallb.io/v1beta1
       kind: L2Advertisement
