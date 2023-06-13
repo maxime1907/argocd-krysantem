@@ -21,8 +21,8 @@ spec:
           - values.yaml
           values: |-
             {{values}}
-        repoURL: https://charts.sagikazarmark.dev
-        targetRevision: "0.16.0"
+        repoURL: https://charts.truecharts.org/
+        targetRevision: "2.0.12"
         chart: sftpgo
 
       destination:
