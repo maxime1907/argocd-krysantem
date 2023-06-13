@@ -31,7 +31,6 @@ values: |
   deviceList:
     - name: qbittorrent-downloads
       enabled: true
-      type: device
       hostPath: /home/torrents
       readOnly: true
   podSecurityContext:
