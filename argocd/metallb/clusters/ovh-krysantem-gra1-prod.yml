@@ -24,5 +24,3 @@ values: |
       spec:
         ipAddressPools:
           - prod
-        interfaces:
-          - kube-ipvs0
