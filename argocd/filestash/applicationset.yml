@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: filestash
+spec:
+  generators:
+    - git:
+        repoURL: https://github.com/maxime1907/argocd-krysantem.git
+        revision: HEAD
+        files:
+          - path: "argocd/filestash/**.yml"
+  template:
+    metadata:
+      name: '{{name}}-filestash'
+    spec:
+      project: default
+      source:
+        helm:
+          releaseName: filestash
+          valueFiles:
+          - values.yaml
+          values: |-
+            {{values}}
+        repoURL: https://charts.truecharts.org
+        targetRevision: "2.0.15"
+        chart: filestash
+
+      destination:
+        server: '{{address}}'
+        namespace: cloud
+
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true

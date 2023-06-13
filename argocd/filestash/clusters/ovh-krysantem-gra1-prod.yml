@@ -1,0 +1,10 @@
+name: "in-cluster"
+address: "https://kubernetes.default.svc"
+values: |
+  service:
+    main:
+      ports:
+        main:
+          port: 8334
+          protocol: TCP
+          targetPort: 8334
