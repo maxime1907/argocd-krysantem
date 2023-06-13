@@ -28,7 +28,7 @@ values: |
       enabled: true
       mountPath: /unraid
       size: 1Gi
-  deviceList
+  deviceList:
     - name: qbittorrent-downloads
       enabled: true
       type: device
